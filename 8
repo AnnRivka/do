@@ -30,3 +30,40 @@ docker run -d -p 5000:5000 --name myflask flask-container
 docker ps
 # Visit http://localhost:5000
     
+
+
+------------------
+
+Files Required
+app.py
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Flask running in Docker"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+requirements.txt
+flask
+Dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 5000
+CMD ["python","app.py"]
+Step 1 — Build Image
+docker build -t flask-container .
+Step 2 — Run Container
+docker run -d -p 5000:5000 flask-container
+Step 3 — Check Running Containers
+docker ps
+Step 4 — Open Browser
+http://localhost:5000
+
+Output:
+
+Flask running in Docker
