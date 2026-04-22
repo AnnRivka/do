@@ -38,3 +38,181 @@ jobs:
 Expected Output
 ✅
 Every push to main triggers a green workflow run in the Actions tab and the image appears on Docker Hub.
+
+
+
+----------
+
+
+Step 1 — Create Project Folder (VS Code)
+
+Open VS Code
+
+File → Open Folder
+
+Create folder:
+
+python-app
+
+Your folder will be empty.
+
+Step 2 — Create Application File
+
+Create file:
+
+app.py
+
+Paste:
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "CI Pipeline Working"
+
+if __name__ == '__main__':
+    app.run()
+
+Save the file.
+
+Step 3 — Create Requirements File
+
+Create:
+
+requirements.txt
+
+Write:
+
+flask
+Step 4 — Initialize Git
+
+Open VS Code terminal
+
+Terminal → New Terminal
+
+Run:
+
+git init
+Step 5 — Add Files to Git
+git add .
+Step 6 — Commit Files
+git commit -m "initial commit"
+Step 7 — Create GitHub Repository
+
+Open browser:
+
+https://github.com
+
+Click:
+
++ → New Repository
+
+Name:
+
+python-app
+
+Click:
+
+Create Repository
+Step 8 — Connect Local Repo to GitHub
+
+Copy the repository URL from GitHub.
+
+Example:
+
+https://github.com/username/python-app.git
+
+Now run in terminal:
+
+git remote add origin https://github.com/username/python-app.git
+Step 9 — Push Code to GitHub
+git branch -M main
+git push -u origin main
+
+Now your code appears in GitHub.
+
+Step 10 — Create GitHub Actions Workflow
+
+Inside VS Code create folder:
+
+.github
+
+Inside it create folder:
+
+workflows
+
+Inside that create file:
+
+ci.yml
+
+Final structure:
+
+python-app
+│
+├── app.py
+├── requirements.txt
+└── .github
+      └── workflows
+            └── ci.yml
+Step 11 — Write GitHub Actions Pipeline
+
+Open ci.yml
+
+Paste:
+
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run Application
+      run: python app.py
+
+Save.
+
+Step 12 — Push Workflow File
+
+Run:
+
+git add .
+git commit -m "added CI pipeline"
+git push
+Step 13 — Check Pipeline
+
+Open GitHub repository.
+
+Click:
+
+Actions
+
+You will see:
+
+CI Pipeline running
+
+If successful:
+
+✔ build completed
+Expected Output
+
+GitHub Actions tab shows pipeline execution whenever code is pushed.
