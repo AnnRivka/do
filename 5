@@ -75,3 +75,87 @@ Step 4 – Jenkins pipeline setup
 2. Pipeline section → Pipeline script from SCM → Git → enter repo URL
 3. Manage Jenkins → Credentials → Add Docker Hub credentials with ID dockerhub-creds
 4. Click Build Now
+
+
+
+-------------
+
+Step 1 — Start Jenkins (Terminal)
+
+Run:
+
+docker run -d -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+Step 2 — Open Jenkins
+
+Open browser:
+
+http://localhost:8080
+Step 3 — Get Jenkins Password
+
+Run in terminal:
+
+docker exec -it <jenkins-container-id> cat /var/jenkins_home/secrets/initialAdminPassword
+
+Paste the password into Jenkins.
+
+Install Suggested Plugins.
+
+Step 4 — Create Jenkins Pipeline
+
+In Jenkins dashboard:
+
+New Item → Pipeline
+
+Name:
+
+devops-pipeline
+
+Click OK.
+
+Step 5 — Create Jenkinsfile
+
+In your project folder create:
+
+Jenkinsfile
+Jenkinsfile Code
+pipeline {
+
+ agent any
+
+ stages {
+
+  stage('Build') {
+   steps {
+    echo 'Building application'
+   }
+  }
+
+  stage('Test') {
+   steps {
+    echo 'Testing application'
+   }
+  }
+
+  stage('Deploy') {
+   steps {
+    echo 'Deploying application'
+   }
+  }
+
+ }
+
+}
+Step 6 — Build Pipeline
+
+In Jenkins:
+
+Build Now
+
+You will see stages running:
+
+Build
+Test
+Deploy
+Expected Output
+
+Pipeline executes successfully in Jenkins dashboard.
