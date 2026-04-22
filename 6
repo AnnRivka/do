@@ -53,3 +53,32 @@ spec:
 kubectl apply -f deployment.yaml
 kubectl get all
 
+
+-----------------
+
+
+Step 1 — Create Deployment
+
+Run:
+
+kubectl create deployment myapp --image=nginx
+Step 2 — Check Deployment
+kubectl get deployments
+Step 3 — Check Pods
+kubectl get pods
+Step 4 — Scale Deployment
+kubectl scale deployment myapp --replicas=3
+Step 5 — Verify Scaling
+kubectl get pods
+
+You should see 3 pods running.
+
+Step 6 — Expose Deployment
+kubectl expose deployment myapp --port=80 --type=NodePort
+Step 7 — View Services
+kubectl get services
+Step 8 — Delete Deployment
+kubectl delete deployment myapp
+Expected Output
+
+Pods created and scaled successfully.
