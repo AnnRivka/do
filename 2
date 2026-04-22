@@ -41,3 +41,54 @@ Expected Output
 ✅
 Browser shows Hello from Dockerised Flask! — Image visible on Docker Hub under your repository.
 
+
+---------------
+
+Experiment 2 — Dockerize Flask Application
+Step 1 — Create folder
+
+Create folder:
+
+docker-flask
+Step 2 — Create files
+
+app.py
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello Docker"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+requirements.txt
+flask
+Dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 5000
+CMD ["python","app.py"]
+
+Step 3 — Build Docker image
+
+Open terminal:
+
+docker build -t flask-app .
+
+Step 4 — Run container
+docker run -d -p 5000:5000 flask-app
+
+Step 5 — Check output
+
+Open browser:
+
+http://localhost:5000
+
+Output:
+
+Hello Docker
+
