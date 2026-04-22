@@ -55,3 +55,49 @@ Expected Output
 ✅
 GitHub Actions shows 2 passed with green checkmarks. Every push to main automatically runs the tests.
 
+
+
+------------------
+
+
+Step 1 — Create Test File
+
+Create:
+
+test_app.py
+Code
+def add(a,b):
+    return a+b
+
+def test_add():
+    assert add(2,3)==5
+Step 2 — Create Workflow
+.github/workflows/python-test.yml
+Step 3 — Workflow Code
+name: Python Test
+
+on:
+ push:
+
+jobs:
+
+ test:
+
+  runs-on: ubuntu-latest
+
+  steps:
+
+   - uses: actions/checkout@v3
+
+   - name: Install Dependencies
+     run: pip install pytest
+
+   - name: Run Tests
+     run: pytest
+Step 4 — Push Code
+git add .
+git commit -m "add tests"
+git push
+Expected Output
+
+GitHub Actions runs tests automatically.
