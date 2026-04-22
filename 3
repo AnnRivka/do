@@ -43,3 +43,43 @@ curl -X POST http://localhost:5000/students \
 
 # List all students
 curl http://localhost:5000/students
+
+
+
+
+------------
+
+Experiment 3 — Monolithic Flask Application
+
+Step 1 — Create file
+app.py
+
+Code
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+students = {}
+
+@app.route('/students', methods=['GET'])
+def get_students():
+    return jsonify(students)
+
+@app.route('/students', methods=['POST'])
+def add_student():
+    data = request.get_json()
+    students[data['roll']] = data['name']
+    return jsonify(data)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    
+Step 2 — Install flask
+pip install flask
+Step 3 — Run program
+python app.py
+
+Step 4 — Test API
+
+Open browser:
+
+http://localhost:5000/students
